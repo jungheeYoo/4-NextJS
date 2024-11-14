@@ -115,23 +115,56 @@
 //   );
 // }
 
-//////////////////////////////////////////////////
-// ✅ 2-4. Hydration
-// ❓ 사용자가 최초 HTMl 을 본 뒤에 어떤 일이 일어나는가?
-// ❓ 리액트가 언제 활성화 되는지? 이 과정을 Hydration 이라고 한다
+// //////////////////////////////////////////////////
+// // ✅ 2-4. Hydration
+// // ❓ 사용자가 최초 HTMl 을 본 뒤에 어떤 일이 일어나는가?
+// // ❓ 리액트가 언제 활성화 되는지? 이 과정을 Hydration 이라고 한다
 
-// 서버사이드 렌더링(SSR)을 통해 만들어 진 인터랙티브 하지 않는 HTML을 클라이언트 측 자바스크립트를 사용하여 인터랙티브한 리액트 컴포넌트로 변환하는 과정을 말한다.
-// (서버 환경에서 이미 렌더링된 HTML에 React를 붙이는 것)
+// // 서버사이드 렌더링(SSR)을 통해 만들어 진 인터랙티브 하지 않는 HTML을 클라이언트 측 자바스크립트를 사용하여 인터랙티브한 리액트 컴포넌트로 변환하는 과정을 말한다.
+// // (서버 환경에서 이미 렌더링된 HTML에 React를 붙이는 것)
+
+// 'use client';
+
+// import Link from 'next/link';
+// import { usePathname } from 'next/navigation';
+// import { useState } from 'react';
+
+// export default function Navigation() {
+//   const path = usePathname();
+//   const [count, setCount] = useState(0);
+//   console.log(path);
+
+//   return (
+//     <nav>
+//       <ul>
+//         <li>
+//           <Link href="/">Home</Link> {path === '/' ? '🔥' : ''}
+//         </li>
+//         <li>
+//           <Link href="/about-us">About Us</Link>{' '}
+//           {path === '/about-us' ? '🔥' : ''}
+//         </li>
+//         <li>
+//           <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+//         </li>
+//       </ul>
+//     </nav>
+//   );
+// }
+
+//////////////////////////////////////////////////
+// ✅ 2-7. Layouts
+// 레이아웃 시스템
+// 레이아웃 시스템에 대해서 배워야 하는 이유는
+// application을 빌드할 때 재사용하는 요소(element)들이 있기 때문이다.
 
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
 export default function Navigation() {
   const path = usePathname();
-  const [count, setCount] = useState(0);
   console.log(path);
 
   return (
@@ -143,9 +176,6 @@ export default function Navigation() {
         <li>
           <Link href="/about-us">About Us</Link>{' '}
           {path === '/about-us' ? '🔥' : ''}
-        </li>
-        <li>
-          <button onClick={() => setCount((c) => c + 1)}>{count}</button>
         </li>
       </ul>
     </nav>
