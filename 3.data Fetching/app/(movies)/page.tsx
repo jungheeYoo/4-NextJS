@@ -63,9 +63,9 @@
 // fetch 함수들을 분리하기
 
 import { Suspense } from 'react';
-import { API_URL } from '../../../(home)/page';
-import MovieInfo from '../../../../components/movie-info';
-import MovieVideos from '../../../../components/movie-videos';
+import { API_URL } from '../(home)/page';
+import MovieInfo from '../../components/movie-info';
+import MovieVideos from '../../components/movie-videos';
 
 // 🔶 component 따로 만듦
 // getMovie 함수 따로 분리
