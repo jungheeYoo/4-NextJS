@@ -108,30 +108,67 @@
 // // 이 함수는 내 url을 fetch할거고 response를 받아서 response.json()을 return
 // // 어떤 일이 발생하기를 기다리려고 await를 사용할 때, 부모 함수에 무조건 async가 있어야 함
 
+// //////////////////////////////////////////////////
+// // ✅ 3-3. Loading Components
+
+// export const metadata = {
+//   title: 'Home',
+// };
+
+// const URL = 'https://nomad-movies.nomadcoders.workers.dev/movies';
+
+// async function getMovies() {
+//   // console.log('Im fetching!');
+//   // 🔶 프로그램을 멈춰서 느리게 만드는 간단한 트릭 - 로딩 상태를 보기 위해서
+//   await new Promise((resolve) => setTimeout(resolve, 10000));
+//   // const response = await fetch(URL);
+//   // const json = await response.json();
+//   // return json;
+//   return fetch(URL).then((Response) => Response.json());
+// }
+
+// export default async function HomePage() {
+//   const movies = await getMovies();
+//   return <div>{JSON.stringify(movies)}</div>;
+// }
+
+// // 이 파일 이름이 loading이어야 함
+// // 그리고 page 파일 옆에 있어야 함
+// // 그럼 loading 파일은 이 page 파일에 대해 작동함
+
 //////////////////////////////////////////////////
-// ✅ 3-3. Loading Components
+// ✅ 3-4. Parallel Requests
+// 영화 클릭하면 일어나는 일 구현
+// 각 영화 로딩 처리, 병렬 데이터 페칭
+
+import Link from 'next/link';
+import { resolve } from 'path';
 
 export const metadata = {
   title: 'Home',
 };
 
-const URL = 'https://nomad-movies.nomadcoders.workers.dev/movies';
+export const API_URL = 'https://nomad-movies.nomadcoders.workers.dev/movies';
 
 async function getMovies() {
   // console.log('Im fetching!');
-  // 🔶 프로그램을 멈춰서 느리게 만드는 간단한 트릭 - 로딩 상태를 보기 위해서
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+  // 프로그램을 멈춰서 느리게 만드는 간단한 트릭 - 로딩 상태를 보기 위해서
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
   // const response = await fetch(URL);
   // const json = await response.json();
   // return json;
-  return fetch(URL).then((Response) => Response.json());
+  return fetch(API_URL).then((Response) => Response.json());
 }
 
 export default async function HomePage() {
   const movies = await getMovies();
-  return <div>{JSON.stringify(movies)}</div>;
+  return (
+    <div>
+      {movies.map((movie) => (
+        <li key={movie.id}>
+          <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+        </li>
+      ))}
+    </div>
+  );
 }
-
-// 이 파일 이름이 loading이어야 함
-// 그리고 page 파일 옆에 있어야 함
-// 그럼 loading 파일은 이 page 파일에 대해 작동함
