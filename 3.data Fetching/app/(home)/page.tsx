@@ -78,9 +78,38 @@
 //   return <div>{isLoading ? 'Loading...' : JSON.stringify(movies)}</div>;
 // }
 
+// //////////////////////////////////////////////////
+// // ✅ 3-2. server side
+// //  server side data fetching 하는 법
+
+// export const metadata = {
+//   title: 'Home',
+// };
+
+// const URL = 'https://nomad-movies.nomadcoders.workers.dev/movies';
+
+// async function getMovies() {
+//   // console.log('Im fetching!');
+//   // 🔶 프로그램을 멈춰서 느리게 만드는 간단한 트릭 - 로딩 상태를 보기 위해서
+//   await new Promise((resolve) => setTimeout(resolve, 5000));
+//   const response = await fetch(URL);
+//   const json = await response.json();
+//   return json;
+//   // return fetch(URL).then((Response) => Response.json());
+// }
+
+// export default async function HomePage() {
+//   const movies = await getMovies();
+//   return <div>{JSON.stringify(movies)}</div>;
+// }
+
+// // 🔶 fetch 하는 함수 만들기
+// // 이 함수는 component 안에 없어도 됨. server component에서는 좀 달라짐
+// // 이 함수는 내 url을 fetch할거고 response를 받아서 response.json()을 return
+// // 어떤 일이 발생하기를 기다리려고 await를 사용할 때, 부모 함수에 무조건 async가 있어야 함
+
 //////////////////////////////////////////////////
-// ✅ 3-2. server side
-//  server side data fetching 하는 법
+// ✅ 3-3. Loading Components
 
 export const metadata = {
   title: 'Home',
@@ -91,11 +120,11 @@ const URL = 'https://nomad-movies.nomadcoders.workers.dev/movies';
 async function getMovies() {
   // console.log('Im fetching!');
   // 🔶 프로그램을 멈춰서 느리게 만드는 간단한 트릭 - 로딩 상태를 보기 위해서
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  const response = await fetch(URL);
-  const json = await response.json();
-  return json;
-  // return fetch(URL).then((Response) => Response.json());
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  // const response = await fetch(URL);
+  // const json = await response.json();
+  // return json;
+  return fetch(URL).then((Response) => Response.json());
 }
 
 export default async function HomePage() {
@@ -103,7 +132,6 @@ export default async function HomePage() {
   return <div>{JSON.stringify(movies)}</div>;
 }
 
-// 🔶 fetch 하는 함수 만들기
-// 이 함수는 component 안에 없어도 됨. server component에서는 좀 달라짐
-// 이 함수는 내 url을 fetch할거고 response를 받아서 response.json()을 return
-// 어떤 일이 발생하기를 기다리려고 await를 사용할 때, 부모 함수에 무조건 async가 있어야 함
+// 이 파일 이름이 loading이어야 함
+// 그리고 page 파일 옆에 있어야 함
+// 그럼 loading 파일은 이 page 파일에 대해 작동함
