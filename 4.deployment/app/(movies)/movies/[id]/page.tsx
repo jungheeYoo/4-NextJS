@@ -106,19 +106,54 @@
 // // 왜냐하면 여기서는 await하는 게 아무것도 없고, Suspense는 await와 분리되어있다
 // // fallback은 필수는 아님
 
+// //////////////////////////////////////////////////
+// // ✅ 4-3. Movie Trailers
+// // movie detail page style
+
+// import { Suspense } from 'react';
+// import MovieInfo from '../../../../components/movie-info';
+// import MovieVideos from '../../../../components/movie-videos';
+
+// export default async function MovieDetail({
+//   params: { id },
+// }: {
+//   params: { id: string };
+// }) {
+//   return (
+//     <div>
+//       <Suspense fallback={<h1>Loading movie info</h1>}>
+//         <MovieInfo id={id} />
+//       </Suspense>
+//       <Suspense fallback={<h1>Loading movie videos </h1>}>
+//         <MovieVideos id={id} />
+//       </Suspense>
+//     </div>
+//   );
+// }
+
 //////////////////////////////////////////////////
-// ✅ 4-3. Movie Trailers
-// movie detail page를 style
+// ✅ 4-4. Dynamic Metadata
 
 import { Suspense } from 'react';
-import MovieInfo from '../../../../components/movie-info';
+import MovieInfo, { getMovie } from '../../../../components/movie-info';
 import MovieVideos from '../../../../components/movie-videos';
 
-export default async function MovieDetail({
-  params: { id },
-}: {
+interface IParams {
   params: { id: string };
-}) {
+}
+
+// 🔶 이 함수는 fetching 을 할 수 있게 해주는 함수
+// 이 함수는 동적인 제목을 갖고 있는 페이지를 위해 존재함
+// 이 페이지는 id 값에 따라 동적이기 때문에 페이지 이름, 제목이 바뀌어야함
+// movie fetch
+export async function generateMetadata({ params: { id } }: IParams) {
+  const movie = await getMovie(id);
+  return {
+    title: movie.title,
+  };
+}
+
+export default async function MovieDetailPage({ params: { id } }: IParams) {
   return (
     <div>
       <Suspense fallback={<h1>Loading movie info</h1>}>
