@@ -57,6 +57,7 @@
 import { API_URL } from '../app/contants';
 import potato from '../styles/movie-info.module.css';
 
+// ✨ 동적 메타데이터를 위해서 내보내줌
 export async function getMovie(id: string) {
   console.log(`Fetching movies: ${Date.now()}`);
   // await new Promise((resolve) => setTimeout(resolve, 5000));
